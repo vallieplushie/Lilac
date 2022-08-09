@@ -8,7 +8,7 @@ class Lilac:
     Main Lilac class, contains the driver code
     """
     hadError:bool = false
-    interactive:bool = true
+    interactive:bool = false
 
     @staticmethod
     def run_Prompt():
@@ -16,7 +16,8 @@ class Lilac:
         Runs the interactive prompt
         """
         print('====== Lilac Interactive Prompt ======')
-        print('Enter the command "quit" to exit.')
+        print('Enter the command "quit" to exit.'):quit
+        Lilac.interactive = true
         Lilac.interactive_mode()
     
     @staticmethod
