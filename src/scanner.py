@@ -13,6 +13,11 @@ class Scanner:
         self.start = 0
         self.current = 0
         self.line = 1
+
+        self.keywords = {
+            'true' : Ttype.TRUE,
+            'false' : Ttype.FALSE
+            }
     
     def scan(self):
         """
@@ -45,6 +50,10 @@ class Scanner:
             case '?': self.add_token(Ttype.QUESTION)
             case '|': self.add_token(Ttype.PIPE)
             case '=': self.add_token(Ttype.EQUAL)
+
+            case '#': self.comment()
+
+            case '"': self.string()
             
             # Default case, also contains number and identifier cases
             case _ : 
@@ -130,24 +139,25 @@ class Scanner:
             self.advance()
         
         if real:
-            self.add_token(T.NUMREAL, float(self.source[self.start:self.current]))
+            self.add_token(Ttype.NUMREAL, float(self.source[self.start:self.current]))
         else:
             self.add_token(T.NUMINT, int(self.source[self.start:self.current]))
 
     def identifier(self):
+
         while self.alphanum(self.peek()):
             self.advance()
 
         id = self.source[self.start:self.current]
         type = self.keywords.get(id)
         if type is None:
-            type = T.IDENTIFIER
+            type = Ttype.IDENTIFIER
 
         self.add_token(type)
 
     def is_alpha(self, c) -> bool:
         """
-        Return if
+        Checks whether the current character is in the alphabet (plus _)f
         """
         if c is None:
             return False
@@ -155,8 +165,28 @@ class Scanner:
                 (c >= 'A' and c <= 'Z') or \
                 c == '_')
 
-    def alphanum(self, c):
+    def alphanum(self, c) -> bool:
+        """
+        Checks whether the current character is alphanumeric
+        """        
         return self.is_alpha(c) or self.is_digit(c)
+
+    def comment(self):
+        """
+        skips until a new line
+        """
+        while not self.next_match('\n'):
+            self.advance()
+        self.advance()
+
+    def string(self):
+        """
+        Adds a string literal
+        """
+        try:
+            while peek_next() != '"':
+        except IndexError:
+            lilac.Lilac.throw(self.line, Error.SyntaxError, 'Unterminated string')
 
     def block_comment(self):
         while self.source[self.current] != '#' and \

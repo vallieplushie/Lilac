@@ -38,6 +38,9 @@ class Lilac:
         """
         Runs the source, this will build up all the different parts
         """
+        scan = scanner.Scanner(source)
+        scan.scan
+        print(scan.tokens)
 
     @staticmethod
     def throw(line:int, type:Error=Error.Blank, message:str):

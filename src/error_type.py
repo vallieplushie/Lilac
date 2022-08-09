@@ -5,7 +5,7 @@ class Error(Enum):
     Contains the different types of error, as an enum
     """
     SyntaxError = 'SyntaxError'
-    MismatchedParenthesesError = 'MismatchedParenthesesError'
+    # MismatchedParenthesesError = 'MismatchedParenthesesError'
     ArgumentTypeError = 'ArgumentTypeError'
     NameUndefinedError = 'NameUndefinedError'
     Blank = ''
