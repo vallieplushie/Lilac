@@ -7,8 +7,8 @@ class Lilac:
     """
     Main Lilac class, contains the driver code
     """
-    hadError:bool = false
-    interactive:bool = false
+    hadError:bool = False
+    interactive:bool = False
 
     @staticmethod
     def run_Prompt():
@@ -16,7 +16,7 @@ class Lilac:
         Runs the interactive prompt
         """
         print('====== Lilac Interactive Prompt ======')
-        print('Enter the command "quit" to exit.'):quit
+        print('Enter the command "quit" to exit.')
         Lilac.interactive = true
         Lilac.interactive_mode()
     
@@ -43,7 +43,7 @@ class Lilac:
         print(scan.tokens)
 
     @staticmethod
-    def throw(line:int, type:Error=Error.Blank, message:str):
+    def throw(line:int, type:Error, message:str):
         Lilac.report(line, type, message)
 
     @staticmethod
@@ -58,3 +58,13 @@ class Lilac:
         else:
             sys.exit(64) # need to use the correct exit code here, maybe add different codes in the Error enum
     
+if __name__=="__main__":
+    if len(sys.argv) > 2:
+        print("Incorrect usage")
+        sys.exit(64)
+    elif len(sys.argv) == 2:
+        Lilac.interactive = False
+        Lilac.runFile(sys.argv[1])
+    else:
+        Lilac.run_Prompt()
+        Lilac.interactive = True
