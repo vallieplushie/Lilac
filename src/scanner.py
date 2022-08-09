@@ -15,8 +15,8 @@ class Scanner:
         self.line = 1
 
         self.keywords = {
-            'true' : Ttype.TRUE,
-            'false' : Ttype.FALSE
+            #'true' : Ttype.TRUE,
+            #'false' : Ttype.FALSE
             }
     
     def scan(self):
@@ -50,6 +50,7 @@ class Scanner:
             case '?': self.add_token(Ttype.QUESTION)
             case '|': self.add_token(Ttype.PIPE)
             case '=': self.add_token(Ttype.EQUAL)
+            case ':': self.add_token(Ttype.COLON)
 
             case '#': self.comment()
 
@@ -62,8 +63,7 @@ class Scanner:
                 elif self.is_alpha(c):
                     self.identifier()
                 else:
-                    lilac.Lilac.error(0, f'Unknown character {c}')
-                    sys.exit(65)
+                    lilac.Lilac.throw(self.line, Error.SyntaxError, f'Unknown character {c}')
                 return
 
     def at_end(self) -> bool:
@@ -84,6 +84,7 @@ class Scanner:
         Adds a lexed token to the list
         """
         text = self.source[self.start:self.current]
+        print(text)
         self.tokens.append(Token(type, text, literal, self.line))
 
     def next_match(self, expected) -> bool:
@@ -141,7 +142,7 @@ class Scanner:
         if real:
             self.add_token(Ttype.NUMREAL, float(self.source[self.start:self.current]))
         else:
-            self.add_token(T.NUMINT, int(self.source[self.start:self.current]))
+            self.add_token(Ttype.NUMINT, int(self.source[self.start:self.current]))
 
     def identifier(self):
 
@@ -183,8 +184,10 @@ class Scanner:
         """
         Adds a string literal
         """
+        string:str = ''
         try:
             while peek_next() != '"':
+                string += self.advance()
         except IndexError:
             lilac.Lilac.throw(self.line, Error.SyntaxError, 'Unterminated string')
 

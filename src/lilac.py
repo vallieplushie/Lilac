@@ -2,6 +2,7 @@ import sys
 from typing import *
 
 from error_type import Error
+import scanner
 
 class Lilac:
     """
@@ -17,7 +18,6 @@ class Lilac:
         """
         print('====== Lilac Interactive Prompt ======')
         print('Enter the command "quit" to exit.')
-        Lilac.interactive = true
         Lilac.interactive_mode()
     
     @staticmethod
@@ -31,7 +31,7 @@ class Lilac:
             if line == 'quit':
                 sys.exit()
             Lilac.run(line)
-            Lilac.hadError = false
+            Lilac.hadError = False
 
     @staticmethod
     def run(source:str):
@@ -39,7 +39,7 @@ class Lilac:
         Runs the source, this will build up all the different parts
         """
         scan = scanner.Scanner(source)
-        scan.scan
+        scan.scan()
         print(scan.tokens)
 
     @staticmethod
