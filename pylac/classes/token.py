@@ -56,6 +56,7 @@ class Ttype(Enum):
     COMMA = ','
 
     PIPE = '|'
+    QUESTION = '?'
 
     EOF = auto()
 

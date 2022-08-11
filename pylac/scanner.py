@@ -3,7 +3,10 @@ from pylac import *
 class Scanner:
     """
     Scanner class which takes care of lexical analysis
+
+    
     """
+
     def __init__(self, source:str):
         self.source:str = source
         self.tokens = []
@@ -24,10 +27,11 @@ class Scanner:
             'Bs' : Ttype.BOOLS
             }
     
-    def scan(self):
+    def scan(self) -> list[Token]:
         """
-        Driving method. Scans the source file, lexing as it goes
+        Scans the source file, converting characters to tokens.
         """
+
         while not self.at_end():
             self.start = self.current
             self.scan_token()
@@ -37,8 +41,11 @@ class Scanner:
 
     def scan_token(self):
         """
-        Scans a single token based on a character
+        Adds a token to the list based on the current character
+
+        Based on match-case on the character. Falls through to {Error.SyntaxError}.
         """
+
         c = self.advance()
         match c:
             # Single characters
@@ -118,7 +125,7 @@ class Scanner:
         self.current += 1
         return self.source[self.current-1]
 
-    def add_token(self, type, literal:str=None):
+    def add_token(self, type, literal=None):
         """
         Adds a lexed token to the list
         """
