@@ -1,6 +1,4 @@
-import lilac
-from ..types import Error
-from ..token import Token, Ttype
+from pylac import *
 
 class Scanner:
     """
@@ -35,7 +33,6 @@ class Scanner:
             self.scan_token()
 
         self.tokens.append(Token(Ttype.EOF, "", None, self.line))
-        self.cleanup_list()
         return self.tokens
 
     def scan_token(self):
@@ -177,7 +174,7 @@ class Scanner:
             self.advance()
             while self.is_digit(self.peek()):
                 self.advance()
-        elif self.peek() == '.' and self.peek_next() is ' ':
+        elif self.peek() == '.' and self.peek_next() == ' ':
             real = True
             self.advance()
         

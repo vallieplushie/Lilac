@@ -1,9 +1,7 @@
-import sys
 from typing import *
+import sys
 
-# from ..types import Error
-# import scanner
-
+# Lilac imports
 import pylac
 
 class Lilac:
@@ -40,16 +38,17 @@ class Lilac:
         """
         Runs the source, this will build up all the different parts
         """
-        scan = scanner.Scanner(source)
+        scan = pylac.Scanner(source)
         scan.scan()
-        print(scan.tokens)
+        for t in scan.tokens:
+            print(t)
 
     @staticmethod
-    def throw(line:int, type:Error, message:str):
+    def throw(line:int, type:pylac.Error, message:str):
         Lilac.report(line, type, message)
 
     @staticmethod
-    def report(line:int, err_type:Error, message:str):
+    def report(line:int, err_type:pylac.Error, message:str):
         """
         Prints and reports an error to the console
         """
@@ -60,14 +59,3 @@ class Lilac:
             Lilac.interactive_mode()
         else:
             sys.exit(64) # need to use the correct exit code here, maybe add different codes in the Error enum
-    
-if __name__=="__main__":
-    if len(sys.argv) > 2:
-        print("Incorrect usage")
-        sys.exit(64)
-    elif len(sys.argv) == 2:
-        Lilac.interactive = False
-        Lilac.runFile(sys.argv[1])
-    else:
-        Lilac.run_Prompt()
-        Lilac.interactive = True
