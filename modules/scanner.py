@@ -1,7 +1,6 @@
 import lilac
-from error_type import Error
-from token import Token
-from token_type import Ttype
+from ..types import Error
+from ..token import Token, Ttype
 
 class Scanner:
     """
@@ -15,8 +14,16 @@ class Scanner:
         self.line = 1
 
         self.keywords = {
-            #'true' : Ttype.TRUE,
-            #'false' : Ttype.FALSE
+            'true' : Ttype.TRUE,
+            'false' : Ttype.FALSE,
+            'I' : Ttype.INT,
+            'Is' : Ttype.INTS,
+            'R' : Ttype.REAL,
+            'Rs' : Ttype.REALS,
+            'S' : Ttype.STRING,
+            'Ss' : Ttype.STRINGS,
+            'B' : Ttype.BOOL,
+            'Bs' : Ttype.BOOLS
             }
     
     def scan(self):
@@ -48,15 +55,50 @@ class Scanner:
             case '*': self.add_token(Ttype.STAR)
             case '/': self.add_token(Ttype.SLASH)
             case '?': self.add_token(Ttype.QUESTION)
-            case '|': self.add_token(Ttype.PIPE)
-            case '=': self.add_token(Ttype.EQUAL)
             case ':': self.add_token(Ttype.COLON)
-
+            case ' ': self.add_token(Ttype.SPACE)
+            case '\n': self.add_token(Ttype.NEWLINE)
+            
             case '#': self.comment()
-
             case '"': self.string()
             
-            # Default case, also contains number and identifier cases
+            case '=': 
+                if self.next_match('='):
+                    self.add_token('LAMBDA')
+                else:
+                    self.add_token('EQUAL')
+
+            case '!':
+                if self.next_match('='):
+                    self.add_token(Ttype.NOTEQUAL)
+                else:
+                    self.add_token(Ttype.NOT)
+
+            case '<':
+                if self.next_match('='):
+                    self.add_token(Ttype.LESSEQUAL)
+                else:
+                    self.add_token(Ttype.LESS)
+            
+            case '>':
+                if self.next_match('='):
+                    self.add_token(Ttype.GREATEREQUAL)
+                else:
+                    self.add_token(Ttype.GREATER)
+
+            case '|':
+                if self.next_match('|'):
+                    self.add_token(Ttype.OR)
+                else:
+                    self.add_token(Ttype.PIPE)
+
+            case '&':
+                if self.next_match('&'):
+                    self.add_token(Ttype.AND)
+                else:
+                    pass
+            
+            # Default case is error, also contains number and identifier cases
             case _ : 
                 if self.is_digit(c):
                     self.number()
@@ -145,7 +187,9 @@ class Scanner:
             self.add_token(Ttype.NUMINT, int(self.source[self.start:self.current]))
 
     def identifier(self):
-
+        """
+        Scans an identifier
+        """
         while self.alphanum(self.peek()):
             self.advance()
 

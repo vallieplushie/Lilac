@@ -11,7 +11,7 @@ class Ttype(Enum):
     REALS = 'Rs'
     STRING = 'S'
     STRINGS = 'Ss'
-    BOOl = 'B'
+    BOOL = 'B'
     BOOLS = 'Bs'
 
     # Literals
@@ -27,6 +27,7 @@ class Ttype(Enum):
     RIGHTPAREN = ')'
     NEWLINE = '\n'
     SPACE = ' ' # maybe unnecessary
+    LAMBDA = '=>'
 
     # Assignment
     COLON = ':'
@@ -41,6 +42,7 @@ class Ttype(Enum):
     # Boolean
     EQUAL = '='
     NOTEQUAL = '!='
+    NOT = '!'
     AND = '&&'
     OR = '||'
     LESS = '<'
@@ -53,5 +55,24 @@ class Ttype(Enum):
     RIGHTSQUARE = ']'
     COMMA = ','
 
+    PIPE = '|'
+
     EOF = auto()
 
+
+class Token:
+    """
+    Representation of a token
+    """
+    def __init__(self, 
+            type:Ttype,
+            lexeme:str, # How the token appears in text
+            literal, # The literal value of the token
+            line:int):
+        self.type = type
+        self.lexeme = lexeme
+        self.literal = literal
+        self.line = line
+
+    def __str__(self):
+        return f'{self.type} {self.lexeme} {self.literal} {self.line}'

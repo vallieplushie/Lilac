@@ -1,8 +1,10 @@
 import sys
 from typing import *
 
-from error_type import Error
-import scanner
+# from ..types import Error
+# import scanner
+
+import pylac
 
 class Lilac:
     """
