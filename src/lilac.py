@@ -53,6 +53,7 @@ class Lilac:
         """
         print(f'[Line {line}] {err_type.value}: {message}')
         Lilac.hadError = True
+        # don't quit if it's interactive
         if Lilac.interactive:
             Lilac.interactive_mode()
         else:

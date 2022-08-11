@@ -1,3 +1,3 @@
 # Lilac
 
-Minimal functional(ish) rogramming language
+Minimal functional(ish) programming language
