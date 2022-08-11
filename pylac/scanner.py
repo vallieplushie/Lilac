@@ -227,7 +227,7 @@ class Scanner:
         """
         string:str = ''
         try:
-            while peek_next() != '"':
+            while self.peek_next() != '"':
                 string += self.advance()
         except IndexError:
             lilac.Lilac.throw(self.line, Error.SyntaxError, 'Unterminated string')

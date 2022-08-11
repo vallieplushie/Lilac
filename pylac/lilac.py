@@ -19,6 +19,13 @@ class Lilac:
         print('====== Lilac Interactive Prompt ======')
         print('Enter the command "quit" to exit.')
         Lilac.interactive_mode()
+
+    @staticmethod
+    def runFile(source:str):
+        with open(source, 'r') as file:
+            Lilac.run(file.read())
+        if Lilac.hadError:
+            sys.exit(65)
     
     @staticmethod
     def interactive_mode():
