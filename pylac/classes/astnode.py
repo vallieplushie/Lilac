@@ -48,7 +48,7 @@ class AstOperator(AstNode):
     Represents an operator
     """
     
-    def __init__(self, left, right, contents:Ttype, helper=None):
+    def __init__(self, left, right, contents:Token, helper=None):
         super().__init__(left, right, contents, helper)
 
 
@@ -57,6 +57,6 @@ class AstLiteral(AstNode):
     Represents a literal or identifier
     """
 
-    def __init__(self, left, right, contents:Ttype, helper=None):
+    def __init__(self, left, right, contents:Token, helper=None):
         super().__init__(left, right, contents, helper)
 

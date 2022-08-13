@@ -2,9 +2,7 @@ from pylac import *
 
 class Scanner:
     """
-    Scanner class which takes care of lexical analysis
-
-    
+    Scanner class which takes care of lexical analysis 
     """
 
     def __init__(self, source:str):

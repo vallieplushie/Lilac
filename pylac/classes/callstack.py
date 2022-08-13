@@ -7,10 +7,18 @@ from . import *
 class StackNode:
     """
     Generic Node in the lilac callstack
+    
+    ...
+
+    Attributes
+    ----------
+    type : list[Stype]
+        A list holding the types
     """
 
-    def __init__(self, type:Stype, next=None) -> None:
-        self.type:Stype = type
+    def __init__(self, type:list[Stype], contents:Token, next=None) -> None:
+        self.type:list[Stype] = type
+        self.contents:Token = contents
         self.next = next
 
 

@@ -23,4 +23,9 @@ class Stype(Enum):
             STRING, STRINGLIST,
             BOOL, BOOLLIST,
             ]
+
+    IOACTION = 9
+    ASSIGNMENT = 10
+    VARIABLEBINDING = 11
+    REFERENCE = 12
     

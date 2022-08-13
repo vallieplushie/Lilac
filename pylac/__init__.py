@@ -10,3 +10,7 @@ from .classes import *
 # Modules
 from .lilac import Lilac
 from .scanner import Scanner
+from .parser import Parser
+from .actions import *
+from .treemachine import GlobalEnvironment
+
