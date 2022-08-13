@@ -233,11 +233,13 @@ class Scanner:
         Adds a string literal
         """
         string:str = ''
-        try:
-            while self.peek_next() != '"':
-                string += self.advance()
-        except IndexError:
+        while self.peek_next() not in ['"', '\n'] and not self.at_end():
+            string += self.advance()
+
+        if self.peek_next() == '\n' or self.at_end():
             lilac.Lilac.throw(self.line, Error.SyntaxError, 'Unterminated string')
+        else:
+            self.add_token(Ttype.STRINGLIT, string)
 
     def block_comment(self):
         while self.source[self.current] != '#' and \

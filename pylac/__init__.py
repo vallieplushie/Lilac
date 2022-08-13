@@ -1,3 +1,9 @@
+"""
+Main lilac parser package
+
+Joins behaviors with types.
+"""
+
 # Subpackages
 from .classes import *
 

@@ -64,6 +64,19 @@ class Ttype(Enum):
 class Token:
     """
     Representation of a token
+    
+    ...
+
+    Attributes
+    ----------
+    type : Ttype
+        The type of token which this object represents.
+    lexeme : str
+        The string in source code that this token represents.
+    literal : object
+        The value of the token, if it is a number or string
+    line : int
+        The line number of the token
     """
     def __init__(self, 
             type:Ttype,
