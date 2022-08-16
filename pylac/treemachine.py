@@ -8,7 +8,7 @@ class Environment:
     def __init__(self, main_tree:AstNode):
         self.main_tree = main_tree
         self.global_table : dict[str, AstNode] = {}
-        self.call_stack = Stack()
+        self.call_stack = CallStack()
 
 
 class StateMonad:
