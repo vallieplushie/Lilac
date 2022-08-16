@@ -5,8 +5,6 @@ class Grammar:
     """
     Encapsulates all the rules for the grammar of Lilac
 
-    ...
-
     Attributes
     ----------
     built_in_type : List[Ttype]
@@ -20,12 +18,14 @@ class Grammar:
             * 'prec': An int indicating the precedence level. Biger sits lower in the tree.
             * 'left': Boolean lambda expressions which return True if the input type is allowed on the left of the operator.
             * 'right': Boolean lambda expressions which return True if the input type is allowed on the right of the operator.
-
+            * 'allowedl': List of types that match 'left'
+            * 'allowedr': List of types that match 'right'
     """
 
     built_in_type = [Ttype.INT, Ttype.INTS, Ttype.REAL, Ttype.REALS, Ttype.STRING, Ttype.STRINGS, Ttype.BOOL, Ttype.BOOLS]
+    literal = [Ttype.IDENTIFIER, Ttype.NUMINT, Ttype.NUMREAL, Ttype.STRINGLIT, Ttype.TRUE, Ttype.FALSE]
 
-
+    # BIG table holding all the information
     operator_table = {
             Ttype.NEWLINE : {
                 'assoc' : 'R',
@@ -37,6 +37,32 @@ class Grammar:
                 'assoc' : 'L',
                 'prec'  : 2,
                 'left'  : (lambda t: True if t in [Ttype.IDENTIFIER, Ttype.SPACE] else False), 
-                'right' : (lambda t: True if t in Grammar.literal + Ttype.SPACE else False)
+                'right' : (lambda t: True if t in Grammar.literal + [Ttype.SPACE, Ttype.LAMBDA] else False),
+                'allowedl' : [Ttype.IDENTIFIER, Ttype.SPACE],
+                'allowedr' : Grammar.literal + [Ttype.SPACE, Ttype.LAMBDA]
+                },
+            **dict.fromkeys([Ttype.PLUS, Ttype.MINUS], {
+                'assoc' : 'L',
+                'prec'  : 11,
+                'left'  : (lambda t: True if t in [Ttype.IDENTIFIER, Ttype.NUMINT, Ttype.NUMREAL] else False),
+                'right' : (lambda t: True if t in [Ttype.IDENTIFIER, Ttype.NUMINT, Ttype.NUMREAL] else False),
+                'allowedl' : [Ttype.NUMINT, Ttype.NUMREAL, Ttype.IDENTIFIER, Ttype.SPACE],
+                'allowedr' : [Ttype.NUMINT, Ttype.NUMREAL, Ttype.IDENTIFIER, Ttype.SPACE]
+                }),
+            **dict.fromkeys([Ttype.STAR, Ttype.SLASH], {
+                'assoc' : 'L',
+                'prec'  : 12,
+                'left'  : (lambda t: True if t in [Ttype.IDENTIFIER, Ttype.NUMINT, Ttype.NUMREAL] else False),
+                'right' : (lambda t: True if t in [Ttype.IDENTIFIER, Ttype.NUMINT, Ttype.NUMREAL] else False),
+                'allowedl' : [Ttype.NUMINT, Ttype.NUMREAL, Ttype.IDENTIFIER, Ttype.SPACE],
+                'allowedr' : [Ttype.NUMINT, Ttype.NUMREAL, Ttype.IDENTIFIER, Ttype.SPACE]
+                }),
+            Ttype.CARET : {
+                'assoc' : 'L',
+                'prec'  : 13,
+                'left'  : (lambda t: True if t in [Ttype.IDENTIFIER, Ttype.NUMINT, Ttype.NUMREAL] else False),
+                'right' : (lambda t: True if t in [Ttype.IDENTIFIER, Ttype.NUMINT, Ttype.NUMREAL] else False),
+                'allowedl' : [Ttype.NUMINT, Ttype.NUMREAL, Ttype.IDENTIFIER, Ttype.SPACE],
+                'allowedr' : [Ttype.NUMINT, Ttype.NUMREAL, Ttype.IDENTIFIER, Ttype.SPACE]
                 }
             }

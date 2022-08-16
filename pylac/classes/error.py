@@ -7,6 +7,7 @@ class Error(Enum):
     SyntaxError = 'SyntaxError'
     # MismatchedParenthesesError = 'MismatchedParenthesesError'
     ArgumentTypeError = 'ArgumentTypeError'
+    OperandTypeError = 'OperandTypeError'
     NameUndefinedError = 'NameUndefinedError'
     Blank = ''
 
